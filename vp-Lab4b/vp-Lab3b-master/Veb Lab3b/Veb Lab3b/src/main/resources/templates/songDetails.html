@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Song Details</title>
+
+</head>
+<body>
+<!-- dynamically display data -->
+<header>
+   <h1 th:text="${ 'Title: '+ song.getTitle()}">Song title</h1>
+</header>
+<section>
+    <h2 th:text="${ 'Genre: ' + song.getGenre()}">Genre</h2>
+    <h2 th:text="${ 'Album: ' +  song.getAlbum().getName()}">Album</h2>
+    <h2 th:text="${ 'Release Year: ' + song.getReleaseYear()}">Year</h2>
+    <h2>Performers:</h2>
+    <ul>
+        <li th:each="artist : ${song.getPerformers()}" th:text="${artist.getFirstName()}+ ' ' + ${artist.getLastName()}">Jon Bon Jovi</li>
+    </ul>
+</section>
+
+<form th:action="@{/songs}" th:method="GET">
+    <input type="submit" value="Back to Songs list">
+</form>
+
+</body>
+</html>

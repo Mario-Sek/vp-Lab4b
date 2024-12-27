@@ -1,0 +1,75 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new song</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/songs/add}">
+  <input id="trackId" type="hidden" name="trackId"
+         th:value="(${song} != null ? ${song.getId()} : '')">
+  <table class="table">
+    <tr>
+      <td><label for="title">Song title</label></td>
+      <td>
+        <input type="text"
+               class="form-control"
+               id="title"
+               name="title"
+               th:value="(${song} != null ? ${song.getTitle()} : '')"
+               required
+               placeholder="Enter song title">
+      </td>
+    </tr>
+    <tr>
+      <td><label for="genre">Genre</label></td>
+      <td>
+        <input type="text"
+               class="form-control"
+               id="genre"
+               name="genre"
+               th:value="(${song} != null ? ${song.getGenre()} : '')"
+               placeholder="Genre">
+      </td>
+    </tr>
+    <tr>
+      <td><label for="releaseYear">Release year</label></td>
+      <td>
+        <input type="text"
+               class="form-control"
+               id="releaseYear"
+               name="releaseYear"
+               th:value="(${song} != null ? ${song.getReleaseYear()} : '')"
+               placeholder="Release year">
+      </td>
+    </tr>
+    <tr>
+      <td><label>Album</label></td>
+      <td>
+        <select name="albumId" class="form-control">
+          <option th:if="${song} != null"
+                  th:selected="${song.getAlbum() != null && song.getAlbum().getId() == album.id}"
+                  th:each="album : ${albums}"
+                  th:value="${album.id}"
+                  th:text="${album.name}">
+          </option>
+          <option th:if="${song} == null"
+                  th:each="album : ${albums}"
+                  th:value="${album.getId()}"
+                  th:text="${album.getName()}">
+          </option>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <div class="form-group">
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    <button class="btn btn-primary" onclick="window.location.href='/songs';">Back</button>
+  </div>
+</form>
+
+
+</body>
+</html>
+</th:block>

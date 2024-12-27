@@ -1,0 +1,83 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+    <h2>Add a new song:</h2>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/songs/add-form}">
+        <button type="button">Add new song</button>
+    </a>
+    </th:block>>
+
+    <h2>Filter songs by album:</h2>
+
+    <form th:action="@{/songs}" th:method="GET">
+        <label for="albumSelect">Select an Album:</label>
+        <select id="albumSelect" name="albumId" class="form-select">
+            <option value="-1" selected> </option>
+            <option th:each="album : ${albums}"
+                    th:value="${album.getId()}"
+                    th:text="${album.getName()}"></option>
+        </select>
+        <br>
+        <br>
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h2>Choose a song:</h2>
+
+    <form th:method="POST" th:action="@{/artist}">
+        <table>
+            <thead>
+            <tr>
+                <th>Song</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="song : ${songs}" style="padding-bottom: 10px;">
+                <td>
+                    <input type="radio" name="trackId" th:value="${song.id}"
+                           th:text="'Title: ' + ${song.title} + ', Genre: ' + ${song.genre} + ', Release Year: ' + ${song.releaseYear} + ', Album name: ' + ${song.album.getName() + ', Album id: ' + song.album.getId()}" />
+                </td>
+                <td>
+                    <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
+                    <a th:href="@{/songs/delete/{id}(id=${song.id})}">
+                        <button type="button">Delete song</button>
+                    </a>
+                    </th:block>
+                    <br />
+                    <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
+                    <a th:href="@{/songs/edit-form/{id}(id=${song.id})}">
+                        <button type="button">Edit song</button>
+                    </a>
+                    </th:block>>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <!-- Display radio buttons for each song,
+            the value should be the trackId
+            and the displayed text should be Title: <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
+</main>
+</body>
+</html>
+</th:block>

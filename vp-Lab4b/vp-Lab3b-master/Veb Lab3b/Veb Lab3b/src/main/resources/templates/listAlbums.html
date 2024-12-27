@@ -1,0 +1,36 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <div xmlns:th="http://www.thymeleaf.org">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">WEB PROGRAMMING MUSIC</h1>
+                <h3 class="jumbotron-heading">All albums</h3>
+            </div>
+        </section>
+
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-12" th:if="${albums.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Album name</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Release year</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="album : ${albums}" class="album">
+                                <td th:text="${album.getName()}"></td>
+                                <td th:text="${album.getGenre()}"></td>
+                                <td th:text="${album.getReleaseYear()}"></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
